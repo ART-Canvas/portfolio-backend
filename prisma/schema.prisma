@@ -10,6 +10,7 @@ datasource db {
 model Skills{
   skill_id Int @id @default(autoincrement())
   skill_name String
+  users user_skills[]
 }
 
 model Profession{
@@ -29,6 +30,14 @@ model User{
   website_link String
   description String
   ratings Int
+  education Education[]
+  achievements Achievements[]
+  experience Experience[]
+  skills user_skills[]
+  media Media[]
+  reviews Review[] @relation("artist")
+  posted_user_reviews Review[] @relation("posted_user")
+  language user_language[]
 }
 
 model Education{
@@ -38,8 +47,8 @@ model Education{
   college_name String
   degree String
   field_of_study String
-  start_date Datetime
-  end_date Datetime
+  start_date DateTime
+  end_date DateTime
   description String
 }
 
@@ -53,5 +62,68 @@ model Achievements{
 
 model Experience{
   experience_id Int @id @default(autoincrement())
-  
+  profile_id Int
+  profile User @relation(fields: [profile_id], references: [profile_id])
+  company String
+  experience_headline String
+  type String
+  start_date DateTime
+  is_current_role Boolean
+  end_date DateTime?
+  location String
+  description String
+}
+
+model user_skills{
+  id Int @id @default(autoincrement())
+  profile_id Int
+  profile User @relation(fields: [profile_id], references: [profile_id])
+  skill_id Int
+  skill Skills @relation(fields: [skill_id], references: [skill_id])
+}
+
+model Photos{
+  photo_id Int @id @default(autoincrement())
+  link String
+  media Media[]
+}
+
+model Videos{
+  video_id Int @id @default(autoincrement())
+  link String
+  media Media[]
+}
+
+model Media{
+  media_id Int @id @default(autoincrement())
+  profile_id Int
+  profile User @relation(fields: [profile_id], references: [profile_id])
+  photo_id Int
+  photo Photos @relation(fields: [photo_id], references: [photo_id])
+  video_id Int
+  video Videos @relation(fields: [video_id], references: [video_id])
+}
+
+model Languages{
+  language_id Int @id @default(autoincrement())
+  language String
+  users user_language[]
+}
+
+model user_language{
+  id Int @id @default(autoincrement())
+  profile_id Int
+  profile User @relation(fields: [profile_id], references: [profile_id])
+  language_id Int
+  language Languages @relation(fields: [language_id], references: [language_id])
+}
+
+model Review{
+  review_id Int @id @default(autoincrement())
+  profile_id Int
+  profile User @relation("artist", fields: [profile_id], references: [profile_id])
+  text String
+  rating Int
+  posted_user_id Int
+  posted_user_profile User @relation("posted_user", fields: [posted_user_id], references: [profile_id])
 }
