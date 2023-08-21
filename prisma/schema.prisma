@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Skills{
+  skill_id Int @id @default(autoincrement())
+  skill_name String
+}
+
+model Profession{
+  profession_id Int @id @default(autoincrement())
+  profession_name String
+  user User[]
+}
+
+model User{
+  profile_id Int @id @default(autoincrement())
+  name String
+  profession_id Int
+  profession_name Profession @relation(fields: [profession_id], references: [profession_id])
+  years_exp Int
+  workplace String
+  nationality String
+  website_link String
+  description String
+  ratings Int
+}
+
+model Education{
+  education_id Int @id @default(autoincrement())
+  profile_id Int
+  profile User @relation(fields: [profile_id], references: [profile_id])
+  college_name String
+  degree String
+  field_of_study String
+  start_date Datetime
+  end_date Datetime
+  description String
+}
+
+model Achievements{
+  achievement_id Int @id @default(autoincrement())
+  title String
+  timeline String
+  profile_id Int
+  profile User @relation(fields: [profile_id], references: [profile_id])
+}
+
+model Experience{
+  experience_id Int @id @default(autoincrement())
+  
+}
