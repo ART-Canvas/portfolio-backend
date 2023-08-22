@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProfessionInput } from './dto/create-profession.input';
-import { UpdateProfessionInput } from './dto/update-profession.input';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ProfessionService {
-  create(createProfessionInput: CreateProfessionInput) {
-    return 'This action adds a new profession';
-  }
+
+  constructor(private prisma: PrismaService) {}
+
+  // create(createProfessionInput: CreateProfessionInput) {
+  //   return 'This action adds a new profession';
+  // }
 
   findAll() {
-    return `This action returns all profession`;
+    return this.prisma.profession.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} profession`;
+    return this.prisma.profession.findFirst({where: {profession_id: id}});
   }
 
-  update(id: number, updateProfessionInput: UpdateProfessionInput) {
-    return `This action updates a #${id} profession`;
-  }
+  // update(id: number, updateProfessionInput: UpdateProfessionInput) {
+  //   return `This action updates a #${id} profession`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} profession`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} profession`;
+  // }
 }

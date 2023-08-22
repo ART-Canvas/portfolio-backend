@@ -1,0 +1,9 @@
+type Profession{
+    profession_id: Int
+    profession_name: String
+}
+
+type Query{
+    findAll: [Profession]
+    findOne(profession_id: id): Profession
+}

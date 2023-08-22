@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Profession {
+  profession_id: Float!
+  profession_name: String!
+}
+
+type Query {
+  findAll: [Profession!]!
+  profession(id: Int!): Profession!
+}
